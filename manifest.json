@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Studio Automation (Feraset)",
+  "version": "1.0",
+  "description": "Manually trigger YouTube Studio automation tasks via a popup.",
+  "host_permissions": [
+  "https://studio.youtube.com/*"
+],
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
