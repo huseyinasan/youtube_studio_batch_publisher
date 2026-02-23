@@ -1,0 +1,11 @@
+{
+  "name": "youtube-batch-publisher",
+  "version": "1.2.0",
+  "description": "Chrome extension for resilient YouTube Studio draft batch publishing.",
+  "private": true,
+  "scripts": {
+    "lint": "node --check popup.js && node --check background.js",
+    "package": "zip -r youtube-batch-publisher-v1.2.0.zip . -x '*.git*' '*.DS_Store*' '*.zip'"
+  },
+  "license": "MIT"
+}

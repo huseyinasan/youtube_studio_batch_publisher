@@ -1,0 +1,209 @@
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --text: #182230;
+  --muted: #607083;
+  --border: #d7deea;
+  --primary: #0f62fe;
+  --primary-hover: #004bd8;
+  --secondary: #eef2f8;
+  --danger: #d93025;
+  --ready: #1a73e8;
+  --running: #7c4dff;
+  --success: #188038;
+  --warning: #b06000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 360px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #f8fbff 0%, #f2f5fb 100%);
+}
+
+.container {
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.header p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #394b60;
+  margin-bottom: 6px;
+}
+
+.field-control {
+  width: 100%;
+  border: 1px solid #c7d3e4;
+  border-radius: 8px;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #28394d;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.btn {
+  height: 36px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover:enabled {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  border-color: #d4deec;
+  color: #233143;
+}
+
+.status {
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 7px 9px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+}
+
+.status.ready {
+  background: #e9f2ff;
+  color: var(--ready);
+}
+
+.status.running {
+  background: #f0e9ff;
+  color: var(--running);
+}
+
+.status.reloading {
+  background: #fff5e6;
+  color: var(--warning);
+}
+
+.status.success {
+  background: #e8f6ec;
+  color: var(--success);
+}
+
+.status.error {
+  background: #fce8e6;
+  color: var(--danger);
+}
+
+.status.cancelled {
+  background: #f3f5f8;
+  color: #5e6f83;
+}
+
+.progress-text {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #4d5e73;
+  min-height: 16px;
+}
+
+.summary-box {
+  margin-top: 4px;
+  background: #f6f9ff;
+  border: 1px solid #dde6f5;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #304154;
+  min-height: 64px;
+}
+
+.summary-box strong {
+  color: #132131;
+}
+
+.error-text {
+  margin-top: 8px;
+  color: var(--danger);
+  font-size: 12px;
+  line-height: 1.35;
+  min-height: 14px;
+}
+
+.hint {
+  margin: 0;
+  color: #5f6f82;
+  font-size: 11px;
+  text-align: center;
+}
+
+.feedback {
+  margin: 0;
+  color: #5f6f82;
+  font-size: 11px;
+  text-align: center;
+}
+
+.feedback a {
+  color: #0f62fe;
+  text-decoration: none;
+}
+
+.feedback a:hover {
+  text-decoration: underline;
+}

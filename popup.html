@@ -1,29 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>YouTube Studio Automation Feraset</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 10px;
-        width: 250px;
-      }
-      label, select, button {
-        margin-bottom: 10px;
-        display: block;
-      }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Batch Publisher</title>
+    <link rel="stylesheet" href="styles/popup.css">
   </head>
   <body>
-    <h3>YouTube Studio Automation Feraset</h3>
-    <label for="visibilitySelect">Select Visibility:</label>
-    <select id="visibilitySelect">
-      <option value="Public">Public</option>
-      <option value="Unlisted">Unlisted</option>
-      <option value="Private">Private</option>
-    </select>
-    <button id="runScript">Run Automation</button>
+    <main class="container">
+      <header class="header">
+        <h1>YouTube Batch Publisher</h1>
+        <p>Run draft publishing in the background while you browse other tabs.</p>
+      </header>
+
+      <section class="card">
+        <label class="field-label" for="visibility-select">Visibility</label>
+        <select id="visibility-select" class="field-control">
+          <option value="Public">Public</option>
+          <option value="Unlisted">Unlisted</option>
+          <option value="Private">Private</option>
+        </select>
+
+        <label class="checkbox-row" for="made-for-kids">
+          <input type="checkbox" id="made-for-kids">
+          <span>Made for kids</span>
+        </label>
+      </section>
+
+      <section class="actions">
+        <button id="run-start" class="btn btn-primary">Start Batch Publish</button>
+        <button id="run-cancel" class="btn btn-secondary">Cancel</button>
+      </section>
+
+      <section class="card status-card">
+        <div class="field-label">Status</div>
+        <div id="run-status" class="status ready">Ready</div>
+        <div id="run-progress" class="progress-text"></div>
+      </section>
+
+      <section class="card summary-card">
+        <div class="field-label">Run Summary</div>
+        <div id="run-summary" class="summary-box">No runs yet.</div>
+        <div id="run-error" class="error-text"></div>
+      </section>
+
+      <p class="hint">Keep one YouTube Studio tab open during execution.</p>
+      <p class="feedback">
+        Feedback:
+        <a href="mailto:asanhuseyin24@gmail.com">asanhuseyin24@gmail.com</a>
+      </p>
+    </main>
+
     <script src="popup.js"></script>
   </body>
 </html>
