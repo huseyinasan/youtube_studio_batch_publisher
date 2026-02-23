@@ -583,7 +583,8 @@ function runPublishChunk(config, settings, chunkState) {
     const title = getRowTitleKey(row);
     const duration = getRowDurationKey(row);
     const mediaIdentity = normalizeUrlForIdentity(urlCandidates[0] || '');
-    const fallbackSeed = `${title}|${duration}|${mediaIdentity}` || `row:${index}`;
+    const identityParts = [title, duration, mediaIdentity].filter(Boolean);
+    const fallbackSeed = identityParts.length > 0 ? identityParts.join('|') : `row:${index}`;
     const digest = simpleHash(fallbackSeed);
     return `fallback:${digest}`;
   };
@@ -742,6 +743,12 @@ function runPublishChunk(config, settings, chunkState) {
     let latestTarget = null;
 
     for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      const residualClosed = await ensureNoResidualDraftModal();
+      if (!residualClosed) {
+        await sleep(180);
+        continue;
+      }
+
       latestTarget = findDraftTargetByVideoId(videoId);
       if (!latestTarget) {
         await sleep(180);
@@ -819,6 +826,57 @@ function runPublishChunk(config, settings, chunkState) {
       await sleep(100);
     }
     return null;
+  };
+
+  const closeDraftModal = async (modal) => {
+    if (!modal) {
+      return true;
+    }
+
+    const strictCloseSelectors = [
+      '#close-button',
+      'ytcp-icon-button#close-button',
+      'tp-yt-paper-icon-button#close-button',
+      'button#close-button',
+      'button[aria-label*="close" i]',
+      'ytcp-button[aria-label*="close" i]',
+      'tp-yt-paper-button[aria-label*="close" i]',
+      'ytcp-button[dialog-action="cancel" i]',
+      'tp-yt-paper-button[dialog-action="cancel" i]',
+      'button[dialog-action="cancel" i]'
+    ];
+
+    for (const selector of strictCloseSelectors) {
+      const button = modal.querySelector(selector);
+      if (!button) {
+        continue;
+      }
+      click(button);
+      if (await waitForDraftModalToClose(modal, 2500)) {
+        return true;
+      }
+    }
+
+    // Fallback: Esc often closes stuck draft modals in YouTube Studio.
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        which: 27,
+        bubbles: true
+      })
+    );
+
+    return waitForDraftModalToClose(modal, 2500);
+  };
+
+  const ensureNoResidualDraftModal = async () => {
+    const activeModal = findActiveDraftModal();
+    if (!activeModal) {
+      return true;
+    }
+    return closeDraftModal(activeModal);
   };
 
   const waitForPostSaveSignal = async (initialModal, timeoutMs = 12000) => {
@@ -922,6 +980,11 @@ function runPublishChunk(config, settings, chunkState) {
     const wasClosed = await ensureNoBlockingDialog();
     if (!wasClosed) {
       throw new Error('A blocking dialog could not be closed.');
+    }
+
+    const residualClosed = await ensureNoResidualDraftModal();
+    if (!residualClosed) {
+      throw new Error('A previous draft modal is still open and could not be closed.');
     }
 
     const opened = await openDraftModalWithRetry(item.videoId, 3);
